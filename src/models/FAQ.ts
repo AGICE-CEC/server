@@ -6,9 +6,9 @@ import { Column, DataType, Model, Table } from "sequelize-typescript";
   timestamps: true,
   underscored: true,
 })
-export class FAQ extends Model<
-  InferAttributes<FAQ>,
-  InferCreationAttributes<FAQ>
+export class Faq extends Model<
+  InferAttributes<Faq>,
+  InferCreationAttributes<Faq>
 > {
   @Column({
     type: DataType.INTEGER,
