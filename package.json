@@ -9,6 +9,7 @@
     "lint:fix": "eslint . --ext .ts --fix"
   },
   "dependencies": {
+    "@onesignal/node-onesignal": "^5.0.0-alpha-01",
     "@sentry/node": "^8.19.0",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
