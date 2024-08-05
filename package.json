@@ -5,8 +5,8 @@
   "scripts": {
     "start": "tsx index.ts",
     "dev": "tsx watch index.ts",
-    "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "sendnotif": "tsx scripts/sendPush.ts"
   },
   "dependencies": {
