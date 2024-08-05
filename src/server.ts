@@ -1,5 +1,6 @@
 import { createServer } from "http";
 import { app } from "./app";
+import 'dotenv/config'
 
 const port = (process.env.PORT as unknown as number) || 2000;
 const server = createServer(app);
