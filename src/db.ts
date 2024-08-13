@@ -16,39 +16,41 @@ const modelsPath = path.join(__dirname, "models");
 
 const modelDirs = fs
   .readdirSync(modelsPath, { withFileTypes: true })
-  .filter((dirent) => dirent.isDirectory())
+  .filter((dirent) => dirent.isFile())
   .map((dirent) => dirent.name);
 
 const loadModels = async (dirs: string[], modelsDir: string) => {
   const models: ModelCtor[] = [];
   for (const dir of dirs) {
+    console.log(dir)
     try {
-      const modelIndexPath = path.join(modelsDir, dir, "index.ts");
-      const modelModule = await import(modelIndexPath);
+      const modelPath = path.join(modelsDir, dir);  // Construct the path directly from the filename
+      const modelModule = await import(modelPath);  // Import the module
       const model = modelModule.default;
 
       if (model && model.prototype instanceof Model) {
-        models.push(model);
+        models.push(model);  // Add the model to the array if valid
       } else {
         console.error(
-          `Directory ${dir} does not export a valid model with the name ${dir}`
+          `File ${dir} does not export a valid model`
         );
       }
     } catch (err) {
       console.error(`Error importing model from directory ${dir}:`, err);
     }
   }
+  console.log(models)
   db.addModels(models);
 };
 
-const initializeSequelize = async () => {
+export const initializeSequelize = async () => {
+  console.log(modelDirs)
   try {
     await loadModels(modelDirs, modelsPath);
     await db.authenticate();
+    await db.sync({ force: false }); // Use force: true to drop and recreate the tables
     console.log("Database connected successfully.");
   } catch (err) {
     console.error("Error initializing Sequelize:", err);
   }
 };
-
-initializeSequelize();

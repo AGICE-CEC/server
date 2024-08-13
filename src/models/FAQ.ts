@@ -2,19 +2,19 @@ import type { InferAttributes, InferCreationAttributes } from "sequelize";
 import { Column, DataType, Model, Table } from "sequelize-typescript";
 
 @Table({
-  tableName: "FAQs",
-  timestamps: true,
-  underscored: true,
+  tableName: "FAQ",
 })
-export class Faq extends Model<
+export default class Faq extends Model<
   InferAttributes<Faq>,
   InferCreationAttributes<Faq>
 > {
   @Column({
-    type: DataType.INTEGER,
     primaryKey: true,
     autoIncrement: true,
+    type: DataType.INTEGER,
   })
+  FaqId!: number;
+
   @Column({
     type: DataType.STRING,
     allowNull: false,
@@ -22,14 +22,8 @@ export class Faq extends Model<
   question!: string;
 
   @Column({
-    type: DataType.TEXT,
+    type: DataType.STRING,
     allowNull: false,
   })
   answer!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: true,
-  })
-  media!: string;
 }

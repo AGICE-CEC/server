@@ -6,13 +6,13 @@ import {
   ForeignKey,
   BelongsTo,
 } from 'sequelize-typescript';
-import { Ubication } from './UBICATION';
 import type { InferAttributes, InferCreationAttributes } from 'sequelize';
+import Ubication from './UBICATION';
 
 @Table({
   tableName: 'EVENT',
 })
-export class Event extends Model<
+export default class Event extends Model<
   InferAttributes<Event>,
   InferCreationAttributes<Event>
 > {

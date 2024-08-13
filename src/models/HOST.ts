@@ -1,40 +1,23 @@
 import type { InferAttributes, InferCreationAttributes } from "sequelize";
-import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
-import { EventHost } from "./EVENTHOST";
+import { Column, DataType, Model, Table } from "sequelize-typescript";
 
 @Table({
-    tableName: "HOST"
+  tableName: "HOST",
 })
-export class Host extends Model<
-    InferAttributes<Host>,
-    InferCreationAttributes<Host>
+export default class Host extends Model<
+  InferAttributes<Host>,
+  InferCreationAttributes<Host>
 > {
+  @Column({
+    primaryKey: true,
+    autoIncrement: true,
+    type: DataType.INTEGER,
+  })
+  HostId!: number;
 
-    @Column({
-        primaryKey: true,
-        autoIncrement: true,
-        type: DataType.INTEGER
-    })
-    hostId!: number;
-
-    @Column({
-        type: DataType.STRING,
-        allowNull: false
-    })
-    hostName!: string;
-
-    @Column({
-        type: DataType.STRING,
-        allowNull: false
-    })
-    hostDescription!: string;
-
-    @Column({
-        type: DataType.STRING,
-        allowNull: false
-    })
-    image!: string;
-
-    @HasMany(() => EventHost)
-    events!: EventHost[];
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  hostName!: string;
 }

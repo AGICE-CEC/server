@@ -1,11 +1,11 @@
 import { Model, Column, Table, DataType, HasMany } from 'sequelize-typescript';
-import { Event } from './EVENT';
 import type { InferAttributes, InferCreationAttributes } from 'sequelize';
+import Event from './EVENT';
 
 @Table({
   tableName: 'UBICATION',
 })
-export class Ubication extends Model<
+export default class Ubication extends Model<
   InferAttributes<Ubication>,
   InferCreationAttributes<Ubication>
 > {
