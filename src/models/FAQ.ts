@@ -3,6 +3,7 @@ import { Column, DataType, Model, Table } from "sequelize-typescript";
 
 @Table({
   tableName: "FAQ",
+  timestamps: true
 })
 export default class Faq extends Model<
   InferAttributes<Faq>,

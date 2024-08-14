@@ -29,7 +29,7 @@ export default class Event extends Model<
   })
   title!: string;
 
-  @Column({
+  @Column({ 
     type: DataType.STRING,
     allowNull: false,
   })
