@@ -3,7 +3,6 @@ import fs from "fs";
 import path from "path";
 import { Model } from "sequelize";
 import { Sequelize, type ModelCtor } from "sequelize-typescript";
-import { up as migrateUp } from './migrations/001_add_faq_data';
 
 dotenv.config();
 
@@ -49,13 +48,8 @@ export const initializeSequelize = async () => {
   try {
     await loadModels(modelDirs, modelsPath);
     await db.authenticate();
-    await db.sync({ force: false }); // Use force: true to drop and recreate the tables
-    console.log("Database connected successfully.");
-
-    //run migrations
-    await  migrateUp(db.getQueryInterface());
-    console.log('Migration run successfully');
-    
+    await db.sync({ force: true }); // Use force: true to drop and recreate the tables
+    console.log("Database connected successfully.");    
   } catch (err) {
     console.error("Error initializing Sequelize:", err);
   }
