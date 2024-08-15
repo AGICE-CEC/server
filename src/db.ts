@@ -22,7 +22,6 @@ const modelDirs = fs
 const loadModels = async (dirs: string[], modelsDir: string) => {
   const models: ModelCtor[] = [];
   for (const dir of dirs) {
-    console.log(dir)
     try {
       const modelPath = path.join(modelsDir, dir);  // Construct the path directly from the filename
       const modelModule = await import(modelPath);  // Import the module
@@ -39,16 +38,14 @@ const loadModels = async (dirs: string[], modelsDir: string) => {
       console.error(`Error importing model from directory ${dir}:`, err);
     }
   }
-  console.log(models)
   db.addModels(models);
 };
 
 export const initializeSequelize = async () => {
-  console.log(modelDirs)
   try {
     await loadModels(modelDirs, modelsPath);
     await db.authenticate();
-    await db.sync({ force: true }); // Use force: true to drop and recreate the tables
+    await db.sync({ force: false }); // Use force: true to drop and recreate the tables
     console.log("Database connected successfully.");    
   } catch (err) {
     console.error("Error initializing Sequelize:", err);

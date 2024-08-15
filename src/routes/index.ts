@@ -13,8 +13,7 @@ routes.get('/live', (req, res) => {
 
 
 routes.use('/faqs',faqRouter);
-routes.use('/events', eventRouter);
-routes.use('/ubications', ubicationRouter);
+routes.use('/events', eventRouter);routes.use('/ubications', ubicationRouter);
 routes.use('/speakers', speakerRouter);
 routes.use('/event-speakers', eventSpeakerRouter);
 
