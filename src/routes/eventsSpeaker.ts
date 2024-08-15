@@ -9,7 +9,7 @@ eventSpeakerRouter.get('/', async (req, res) => {
         const eventSpeakers = await EventSpeaker.findAll();
         res.json(eventSpeakers);
     } catch (error) {
-        res.status(500).json({error: 'Failed to fetch Speakers of the event'});
+        res.status(500).json({error: 'Failed to fetch speakers of the event'});
     }
 });
 

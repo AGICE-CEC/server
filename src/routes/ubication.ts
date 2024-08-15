@@ -8,7 +8,7 @@ ubicationRouter.get('/', async (req, res) => {
         const ubications = await Ubication.findAll();
         res.json(ubications);
     } catch (error) {
-        res.status(500).json({error: 'Failed to fetch Ubications'});
+        res.status(500).json({error: 'Failed to fetch ubications'});
     }
 });
 
