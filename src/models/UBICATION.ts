@@ -1,5 +1,5 @@
-import { Model, Column, Table, DataType, HasMany } from 'sequelize-typescript';
 import type { InferAttributes, InferCreationAttributes } from 'sequelize';
+import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
 import Event from './EVENT';
 
 @Table({
@@ -28,6 +28,6 @@ export default class Ubication extends Model<
   })
   locationDescription!: string;
 
-  @HasMany(() => Event)
+  @HasMany(() => Event, 'ubicationId')
   events!: Event[];
 }
