@@ -1,12 +1,12 @@
+import type { InferAttributes, InferCreationAttributes } from 'sequelize';
 import {
-  Model,
+  BelongsTo,
   Column,
-  Table,
   DataType,
   ForeignKey,
-  BelongsTo,
+  Model,
+  Table,
 } from 'sequelize-typescript';
-import type { InferAttributes, InferCreationAttributes } from 'sequelize';
 import Ubication from './UBICATION';
 
 @Table({
@@ -29,7 +29,7 @@ export default class Event extends Model<
   })
   title!: string;
 
-  @Column({ 
+  @Column({
     type: DataType.STRING,
     allowNull: false,
   })
@@ -40,7 +40,7 @@ export default class Event extends Model<
     type: DataType.INTEGER,
     allowNull: false,
   })
-  ubicacionId!: number;
+  ubicationId!: number;
 
   @BelongsTo(() => Ubication)
   ubicacion!: Ubication;
