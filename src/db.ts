@@ -6,7 +6,7 @@ import { Sequelize, type ModelCtor } from 'sequelize-typescript';
 
 dotenv.config();
 
-export const db = new Sequelize(process.env.POSTGRES_URL as string, {
+export const db = new Sequelize(process.env.POSTGRES_PRIVATE_URL as string, {
   dialect: 'postgres',
   timezone: '-06:00',
   logging: false,

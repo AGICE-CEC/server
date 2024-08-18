@@ -1,6 +1,7 @@
 import type { InferAttributes, InferCreationAttributes } from 'sequelize';
 import {
   BelongsTo,
+  BelongsToMany,
   Column,
   DataType,
   ForeignKey,
@@ -8,6 +9,8 @@ import {
   Table,
 } from 'sequelize-typescript';
 import Ubication from './UBICATION';
+import Speaker from './SPEAKER';
+import EventSpeaker from './EVENTSPEAKER';
 
 @Table({
   tableName: 'EVENT',
@@ -35,6 +38,18 @@ export default class Event extends Model<
   })
   description!: string;
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  event_day!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  hours!: string;
+
   @ForeignKey(() => Ubication)
   @Column({
     type: DataType.INTEGER,
@@ -43,5 +58,8 @@ export default class Event extends Model<
   ubicationId!: number;
 
   @BelongsTo(() => Ubication)
-  ubicacion!: Ubication;
+  ubication!: Ubication;
+
+  @BelongsToMany(() => Speaker, () => EventSpeaker)
+  speakers!: Speaker[];
 }
