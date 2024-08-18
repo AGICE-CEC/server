@@ -8,9 +8,9 @@ import {
   Model,
   Table,
 } from 'sequelize-typescript';
-import Ubication from './UBICATION';
-import Speaker from './SPEAKER';
 import EventSpeaker from './EVENTSPEAKER';
+import Location from './LOCATION';
+import Speaker from './SPEAKER';
 
 @Table({
   tableName: 'EVENT',
@@ -39,26 +39,32 @@ export default class Event extends Model<
   description!: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
     allowNull: false,
   })
-  event_day!: string;
+  eventDay!: number;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  hours!: string;
+  hourStart!: string;
 
-  @ForeignKey(() => Ubication)
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  hourEnd!: string;
+
+  @ForeignKey(() => Location)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-  ubicationId!: number;
+  locationId!: number;
 
-  @BelongsTo(() => Ubication)
-  ubication!: Ubication;
+  @BelongsTo(() => Location)
+  location!: Location;
 
   @BelongsToMany(() => Speaker, () => EventSpeaker)
   speakers!: Speaker[];

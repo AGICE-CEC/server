@@ -1,57 +1,53 @@
-import { Router } from "express";
-import Event from "../models/EVENT";
-import Speaker from "../models/SPEAKER";
-import Ubication from '../models/UBICATION';
+import { Router } from 'express';
+import Event from '../models/EVENT';
+import Location from '../models/LOCATION';
+import Speaker from '../models/SPEAKER';
 
 const eventRouter = Router();
 
-
 eventRouter.get('/', async (req, res) => {
   try {
-      const events = await Event.findAll({
-        include: [
-          {
-            model: Ubication,
-            attributes: ['ubicationId', 'locationName', 'locationDescription']
-          }
-        ]
-      });
-      
-      // Group events by day
-      const groupedEvents = events.reduce<Record<string, { dia: string; eventos: any[] }>>((acc, event) => {
-          const day = event.get('event_day') as string;
-          if (!acc[day]) {
-              acc[day] = {
-                  dia: day,
-                  eventos: []
-              };
-          }
+    const events = await Event.findAll({
+      include: [
+        {
+          model: Location,
+        },
+      ],
+      order: [['hourStart', 'ASC']],
+    });
 
-          const room = event.get('ubication') ? event.get('ubication').get('locationName') : 'Unknown Room';
+    const groupedEvents = events.reduce<
+      Record<number, { day: number; events: any[] }>
+    >((acc, event) => {
+      const day = event.eventDay;
+      const formattedEvent = {
+        event_id: event.eventId,
+        event_title: event.title,
+        event_description: event.description,
+        hour: event.hourStart,
+        hour_end: event.hourEnd,
+        room: event.location ? event.location.locationName : 'Desconocido',
+      };
 
-          console.log(event);
+      if (!acc[day]) {
+        acc[day] = {
+          day,
+          events: [],
+        };
+      }
 
-          acc[day].eventos.push({
-              event_id: event.get('eventId'),
-              event_title: event.get('title'),
-              event_description: event.get('description'),
-              hour: event.get('hours'),
-              room: room
-            });
+      acc[day].events.push(formattedEvent);
 
-          return acc;
-      }, {});
+      return acc;
+    }, {});
 
-      // Convert the grouped events object into an array
-      const result = Object.values(groupedEvents);
+    const eventsByDayArray = Object.values(groupedEvents);
 
-      res.json(result);
+    res.json(eventsByDayArray);
   } catch (error) {
-      res.status(500).json({ error: 'Failed to fetch events' + error });
+    res.status(500).json({ error: 'Failed to fetch events' + error });
   }
 });
-
-
 
 eventRouter.get('/:id', async (req, res) => {
     try {
