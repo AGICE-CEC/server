@@ -3,18 +3,18 @@ import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
 import Event from './EVENT';
 
 @Table({
-  tableName: 'UBICATION',
+  tableName: 'LOCATION',
 })
-export default class Ubication extends Model<
-  InferAttributes<Ubication>,
-  InferCreationAttributes<Ubication>
+export default class Location extends Model<
+  InferAttributes<Location>,
+  InferCreationAttributes<Location, { omit: 'locationId' | 'events' }>
 > {
   @Column({
     type: DataType.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   })
-  ubicationId!: number;
+  locationId!: number;
 
   @Column({
     type: DataType.STRING,
@@ -28,6 +28,6 @@ export default class Ubication extends Model<
   })
   locationDescription!: string;
 
-  @HasMany(() => Event, 'ubicationId')
+  @HasMany(() => Event, 'locationId')
   events!: Event[];
 }

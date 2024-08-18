@@ -7,21 +7,21 @@ module.exports = {
       {
         title: 'Concert at Central Park',
         description: 'A large concert at Central Park in New York City.',
-        ubicationId: 1,  // Assuming this corresponds to an existing ubicacionId in the Ubication table
+        locationId: 1, // Assuming this corresponds to an existing ubicacionId in the Location table
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         title: 'Louvre Art Exhibition',
         description: 'A special art exhibition at the Louvre Museum in Paris.',
-        ubicationId: 2,  // Assuming this corresponds to an existing ubicacionId in the Ubication table
+        locationId: 2, // Assuming this corresponds to an existing ubicacionId in the Location table
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         title: 'Sydney Opera House Tour',
         description: 'A guided tour of the Sydney Opera House.',
-        ubicationId: 3,  // Assuming this corresponds to an existing ubicacionId in the Ubication table
+        locationId: 3, // Assuming this corresponds to an existing ubicacionId in the Location table
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -30,5 +30,5 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('EVENT', null, {});
-  }
+  },
 };
