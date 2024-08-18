@@ -20,4 +20,28 @@ export default class Speaker extends Model<
     allowNull: false,
   })
   speakerName!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  speaker_description!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  country!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  linkedin!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  contact!: string;
 }
