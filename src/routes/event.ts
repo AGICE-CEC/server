@@ -76,9 +76,12 @@ eventRouter.get('/:id', async (req, res) => {
         room: event.location
           ? event.location.locationName + '.png'
           : 'Desconocido',
-        location: event.location
-          ? event.location.locationDescription
-          : 'Desconocido',
+        location: {
+          id: event.location?.locationId,
+          description: event.location
+            ? event.location.locationDescription
+            : 'Desconocido',
+        },
         speakers: event.speakers.map(speaker => ({
           id: speaker.speakerId,
           name: speaker.speakerName,
