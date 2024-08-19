@@ -1,8 +1,8 @@
-import type { InferAttributes, InferCreationAttributes } from "sequelize";
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import type { InferAttributes, InferCreationAttributes } from 'sequelize';
+import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 @Table({
-  tableName: "SPEAKER",
+  tableName: 'SPEAKER',
 })
 export default class Speaker extends Model<
   InferAttributes<Speaker>,
@@ -25,7 +25,13 @@ export default class Speaker extends Model<
     type: DataType.STRING,
     allowNull: true,
   })
-  speaker_description!: string;
+  speakerDescription!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  speakerImage!: string;
 
   @Column({
     type: DataType.STRING,
@@ -37,7 +43,7 @@ export default class Speaker extends Model<
     type: DataType.STRING,
     allowNull: true,
   })
-  linkedin!: string;
+  linkedIn!: string;
 
   @Column({
     type: DataType.STRING,

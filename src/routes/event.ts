@@ -50,41 +50,48 @@ eventRouter.get('/', async (req, res) => {
 });
 
 eventRouter.get('/:id', async (req, res) => {
-    try {
-      const eventId = req.params.id;
-      const event = await Event.findByPk(eventId, {
-        include: [
-          {
-            model: Speaker,
-            through: { attributes: [] }, 
-            attributes: ['speakerName'],
-        },
-        ]
-      });
-  
-      if (!event) {
-        return res.status(404).json({ message: 'Event not found' });
-      }
-
-
-      const formattedResponse = [
+  try {
+    const eventId = req.params.id;
+    const event = await Event.findByPk(eventId, {
+      include: [
         {
-            charla: event.get('title'),
-            presentadores: event.get('speakers').map(speaker => ({
-                nombre: speaker.get('speakerName'), 
-                hora: event.get('hours'),
-                nivel: "Intermedio",
-                descripcion: event.get('description')
-            }))
-        }
+          model: Speaker,
+        },
+        {
+          model: Location,
+        },
+      ],
+    });
+
+    if (!event) return res.status(404).json({ message: 'Event not found' });
+
+    const formattedResponse = [
+      {
+        event_id: event.eventId,
+        event_title: event.title,
+        event_description: event.description,
+        day: event.eventDay,
+        hour: event.hourStart,
+        hour_end: event.hourEnd,
+        room: event.location
+          ? event.location.locationName + '.png'
+          : 'Desconocido',
+        location: event.location
+          ? event.location.locationDescription
+          : 'Desconocido',
+        speakers: event.speakers.map(speaker => ({
+          id: speaker.speakerId,
+          name: speaker.speakerName,
+          image: speaker.speakerImage ?? '',
+        })),
+      },
     ];
 
     res.json(formattedResponse);
-    } catch (error) {
-      console.error('Error fetching Event:', error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  });
-
+  } catch (error) {
+    console.error('Error fetching Event:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 export default eventRouter;
