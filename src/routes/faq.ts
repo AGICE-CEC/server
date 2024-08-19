@@ -5,7 +5,9 @@ const faqRouter = Router();
 
 faqRouter.get('/', async (req, res) => {
   try {
-    const faqs = await Faq.findAll();
+    const faqs = await Faq.findAll({
+      attributes: ['question', 'answer'],
+    });
     res.json(faqs);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch FAQs' });
