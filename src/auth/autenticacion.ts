@@ -3,8 +3,7 @@ import * as readline from 'readline';
 import * as dotenv from 'dotenv';
 import { google } from 'googleapis'
 
-// EL FUNCIONAMIENTO DE ESTA APP ESTÁ BASADO EN LA ESTRUCTURA DE ESTA HOJA DE CÁLCULO
-// https://docs.google.com/spreadsheets/d/1drEk5oDZJT-xAGFmRbkjuBclE_RktIxKHSNJ9AQyTWM/edit?usp=sharing
+// EL SHEETS OFICIAL ES: https://docs.google.com/spreadsheets/d/1_hKRue_cL4y2Uifrkl9gSdrBSdrzYxveB9meDy6Zfsw/edit?gid=1165359470#gid=1165359470
 
 dotenv.config();
 
@@ -37,7 +36,7 @@ async function checkCredentials(user: string): Promise<boolean> {
   const sheetTitle = sheet.properties.title;
 
   // Definir el rango usando el título de la primera hoja
-  const range = `${sheetTitle}!A1:E`;
+  const range = `${sheetTitle}!A1:U`;
 
   // Obtener los valores de la hoja
   const r = await sheets.spreadsheets.values.get({
@@ -57,31 +56,32 @@ async function authUser(username: string, sheets: any): Promise<boolean> {
   const values = sheets;
 
   for (const row of values) { // se recorre cada fila de la hoja de calculo
-    return row[0] === username; // se verifica si el nombre de usuario coincide con la primera columna
+    return row[2] === username; // se verifica si el nombre de usuario coincide con la primera columna
   }
   return false;
 }
 
 async function verifyPayment(username: string, sheets: any): Promise<boolean> {
   const values = sheets;
-  const fechaActual: Date = new Date();
-  const day = fechaActual.getDate();
-  const month = fechaActual.getMonth() + 1;
-  const year = fechaActual.getFullYear();
-  const fecha = `${day}/${month}/${year}`;
+  // const fechaActual: Date = new Date();
+  // const day = fechaActual.getDate();
+  // const month = fechaActual.getMonth() + 1;
+  // const year = fechaActual.getFullYear();
+  // const fecha = `${day}/${month}/${year}`;
 
   for (const row of values) { // se recorre cada fila de la hoja de calculo
-    if (row[0] === username) { // Verificar si el nombre de usuario coincide
-      switch (fecha) {
-        case "10/9/2024":
-          return row[2] === "TRUE";
-        case "11/9/2024":
-          return row[3] === "TRUE";
-        case "12/9/2024":
-          return row[4] === "TRUE";
-        default:
-          return false;
-      }
+    if (row[2] === username) { // Verificar si el nombre de usuario coincide
+      // switch (fecha) {
+      //   case "10/9/2024":
+      //     return row[2] === "TRUE";
+      //   case "11/9/2024":
+      //     return row[3] === "TRUE";
+      //   case "12/9/2024":
+      //     return row[4] === "TRUE";
+      //   default:
+      //     return false;
+      // }
+     return row[17] === "OK";
     }
   }
   return false; // Devolver false si no se encuentra el usuario o no coincide la fecha
