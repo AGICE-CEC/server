@@ -6,9 +6,33 @@ const faqRouter = Router();
 faqRouter.get('/', async (req, res) => {
   try {
     const faqs = await Faq.findAll({
-      attributes: ['question', 'answer'],
+      attributes: ['question', 'answer', 'faq_language'],
     });
-    res.json(faqs);
+
+    const groupedFaq = faqs.reduce<
+      Record<string, {language: string; faqs: any[]; }>
+      >((lan, faq) => {
+        const language = faq.faq_language;
+        const formattedFaq = {
+          question: faq.question,
+          answer: faq.answer
+        };
+
+        if(!lan[language]) {
+          lan[language] = {
+            language,
+            faqs: [],
+          };
+        }
+
+
+        lan[language].faqs.push(formattedFaq);
+
+        return lan;
+      }, {})
+
+      const faqsByLenaguage = Object.values(groupedFaq);
+    res.json(faqsByLenaguage);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch FAQs' });
   }
