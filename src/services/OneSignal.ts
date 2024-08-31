@@ -2,7 +2,7 @@ import * as OneSignalLib from '@onesignal/node-onesignal';
 
 const ONESIGNAL_APP_ID = process.env.ONESIGNAL_APP_ID as string;
 const ONESIGNAL_REST_API_KEY = process.env.ONESIGNAL_REST_API_KEY as string;
-const ANDROID_URGENT_CHANNEL_ID = 'uuid';
+const ANDROID_URGENT_CHANNEL_ID = 'e474b256-1de6-4847-b6af-a6cb98cc25ad';
 
 const app_key_provider = {
   getToken() {
@@ -20,10 +20,10 @@ const configuration = OneSignalLib.createConfiguration({
 const client = new OneSignalLib.DefaultApi(configuration);
 
 export type NotificationInfo = {
-	title: string,
-	body: string,
-	external_id: string[]
-}
+  title: string;
+  body: string;
+  external_id: string[];
+};
 
 const sendPushNotification = async ({
   title,

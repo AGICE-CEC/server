@@ -4,6 +4,7 @@ import eventRouter from './event';
 import eventSpeakerRouter from './eventsSpeaker';
 import faqRouter from './faq';
 import locationRouter from './location';
+import pushRouter from './push';
 import speakerRouter from './speaker';
 
 const routes = Router();
@@ -18,5 +19,6 @@ routes.use('/events', eventRouter);
 routes.use('/locations', locationRouter);
 routes.use('/speakers', speakerRouter);
 routes.use('/event-speakers', eventSpeakerRouter);
+routes.use('/push', pushRouter);
 
 export default routes;
