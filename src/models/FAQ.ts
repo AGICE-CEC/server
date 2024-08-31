@@ -27,4 +27,10 @@ export default class Faq extends Model<
     allowNull: false,
   })
   answer!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  faq_language!: string;
 }
