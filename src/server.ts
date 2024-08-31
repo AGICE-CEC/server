@@ -1,11 +1,24 @@
 import { createServer } from "http";
 import { app } from "./app";
+import { initializeSequelize } from "./db";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const port = (process.env.PORT as unknown as number) || 2000;
 const server = createServer(app);
-server.listen(port);
-server.on("error", onError);
-server.on("listening", onListening);
+
+const startServer = async () => {
+  try {
+    await initializeSequelize();
+    server.listen(port);
+    server.on("error", onError);
+    server.on("listening", onListening);
+  } catch (err) {
+    console.error("Failed to initialize the server:", err);
+    process.exit(1);
+  }
+};
 
 function onError(error: any) {
   if (error.syscall !== "listen") {
@@ -30,10 +43,8 @@ function onError(error: any) {
 
 function onListening() {
   const addr = server.address();
-  const bind =
-    typeof addr === "string"
-      ? "pipe " + addr
-      : "port " + (addr ? addr.port : "");
-
+  const bind = typeof addr === "string" ? "pipe " + addr : "port " + (addr ? addr.port : "");
   console.log("Listening successfully on " + bind);
 }
+
+startServer();
