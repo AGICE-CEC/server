@@ -43,7 +43,8 @@ export const initializeSequelize = async () => {
   try {
     await loadModels(modelDirs, modelsPath);
     await db.authenticate();
-    await db.sync({ force: false }); // Use force: true to drop and recreate the tables
+    // await db.sync({ force: false }); // Use force: true to drop and recreate the tables
+    // await db.sync({ force: true }); // Use force: true to drop and recreate the tables
     console.log('Database connected successfully.');
   } catch (err) {
     console.error('Error initializing Sequelize:', err);

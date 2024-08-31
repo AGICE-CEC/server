@@ -15,7 +15,10 @@ import Speaker from './SPEAKER';
 })
 export default class EventSpeaker extends Model<
   InferAttributes<EventSpeaker>,
-  InferCreationAttributes<EventSpeaker>
+  InferCreationAttributes<
+    EventSpeaker,
+    { omit: 'eventSpeakerId' | 'event' | 'speaker' }
+  >
 > {
   @Column({
     primaryKey: true,

@@ -1,13 +1,13 @@
-import type { InferAttributes, InferCreationAttributes } from "sequelize";
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import type { InferAttributes, InferCreationAttributes } from 'sequelize';
+import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 @Table({
-  tableName: "FAQ",
-  timestamps: true
+  tableName: 'FAQ',
+  timestamps: true,
 })
 export default class Faq extends Model<
   InferAttributes<Faq>,
-  InferCreationAttributes<Faq>
+  InferCreationAttributes<Faq, { omit: 'FaqId' }>
 > {
   @Column({
     primaryKey: true,
@@ -23,7 +23,7 @@ export default class Faq extends Model<
   question!: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.TEXT,
     allowNull: false,
   })
   answer!: string;

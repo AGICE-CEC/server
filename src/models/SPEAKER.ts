@@ -6,7 +6,7 @@ import { Column, DataType, Model, Table } from 'sequelize-typescript';
 })
 export default class Speaker extends Model<
   InferAttributes<Speaker>,
-  InferCreationAttributes<Speaker>
+  InferCreationAttributes<Speaker, { omit: 'speakerId' }>
 > {
   @Column({
     primaryKey: true,
