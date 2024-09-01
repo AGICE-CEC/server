@@ -10,29 +10,27 @@ faqRouter.get('/', async (req, res) => {
     });
 
     const groupedFaq = faqs.reduce<
-      Record<string, {language: string; faqs: any[]; }>
-      >((lan, faq) => {
-        const language = faq.faq_language;
-        const formattedFaq = {
-          question: faq.question,
-          answer: faq.answer
+      Record<string, { language: string; faqs: any[] }>
+    >((lan, faq) => {
+      const language = faq.faq_language;
+      const formattedFaq = {
+        question: faq.question,
+        answer: faq.answer,
+      };
+
+      if (!lan[language]) {
+        lan[language] = {
+          language,
+          faqs: [],
         };
+      }
 
-        if(!lan[language]) {
-          lan[language] = {
-            language,
-            faqs: [],
-          };
-        }
+      lan[language].faqs.push(formattedFaq);
 
+      return lan;
+    }, {});
 
-        lan[language].faqs.push(formattedFaq);
-
-        return lan;
-      }, {})
-
-      const faqsByLenaguage = Object.values(groupedFaq);
-    res.json(faqsByLenaguage);
+    res.json(groupedFaq);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch FAQs' });
   }
