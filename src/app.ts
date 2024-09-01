@@ -7,6 +7,7 @@ import "express-async-errors";
 import rateLimit from "express-rate-limit";
 import routes from "./routes";
 import { Monitor } from "./services/Monitor";
+import "./cronjobs";
 
 export const app = express();
 
