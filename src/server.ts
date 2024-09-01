@@ -1,14 +1,12 @@
 import 'dotenv/config';
 import { createServer } from 'http';
 import { app } from './app';
-import { initializeSequelize } from './db';
 
 const port = (process.env.PORT as unknown as number) || 2000;
 const server = createServer(app);
 
 const startServer = async () => {
   try {
-    await initializeSequelize();
     server.listen(port);
     server.on('error', onError);
     server.on('listening', onListening);
