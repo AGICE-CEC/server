@@ -22,17 +22,15 @@ const client = new OneSignalLib.DefaultApi(configuration);
 export type NotificationInfo = {
   title: string;
   body: string;
-  external_id: string[];
 };
 
 const sendPushNotification = async ({
   title,
   body,
-  external_id,
 }: NotificationInfo): Promise<OneSignalLib.NotificationWithMeta> => {
   const notification = new OneSignalLib.Notification();
   notification.app_id = ONESIGNAL_APP_ID;
-  notification.include_aliases = { external_id };
+  notification.included_segments = ['All'];
   notification.target_channel = 'push';
   notification.android_channel_id = ANDROID_URGENT_CHANNEL_ID;
 
