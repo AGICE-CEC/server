@@ -12,6 +12,8 @@ attendeesRouter.get('/:email', async (req, res) => {
 
     res.json({ daysAdmitted, email });
   } catch (error) {
+    // @ts-ignore
+    console.log(error?.message);
     res.status(500).json({ error: 'Failed to fetch attendees data' });
   }
 });
