@@ -8,13 +8,8 @@ import { OneSignal } from './services/OneSignal';
  */
 const CRONJOB_DELTA_MINS = 10;
 
-/**
- * Variable to control how many minutes to wait before sending a notification for a meeting.
- */
-const EVENT_DELTA_MINS = 10;
-
 const formatToHour = (date: Date) => {
-  return `${date.getHours()}:${date.getMinutes()}`;
+  return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
 };
 
 const alreadyAlertedEvents = new Set();
@@ -23,8 +18,7 @@ new CronJob(
   `*/${CRONJOB_DELTA_MINS} * * * *`, // every 10 minutes
   async () => {
     const now = new Date();
-    // We add +1 because BETWEEN is exclusive in sequelize
-    const future = new Date(now.getTime() + (EVENT_DELTA_MINS + 1) * 60 * 1000);
+    const future = new Date(now.getTime() + CRONJOB_DELTA_MINS * 60 * 1000);
     const events = await Event.findAll({
       where: {
         eventDay: now.getDate(),
