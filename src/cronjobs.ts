@@ -28,17 +28,25 @@ new CronJob(
         id: {
           [Op.notIn]: Array.from(alreadyAlertedEvents),
         },
+    include: [
+      {
+        model: Location,
       },
-    });
+    ],
+  });
 
-    const tasks = events.map(ev => {
-      alreadyAlertedEvents.add(ev.id);
+  const tasks = events.map(ev => {
+    alreadyAlertedEvents.add(ev.eventId);
 
-      OneSignal.sendPushNotification({
-        title: ev.title,
-        body: ev.description,
-      });
+    const location = ev.location.locationName;
+    const title = `${ev.title} comienza en ${CRONJOB_DELTA_MINS} minutos`;
+    const body = `Dirígete al ${location}. Presiona aquí para ver el mapa o encontrar más información.`;
+
+    OneSignal.sendPushNotification({
+      title,
+      body,
     });
+  });
 
     await Promise.all(tasks);
   }, // onTick
