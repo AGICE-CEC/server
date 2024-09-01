@@ -1,5 +1,7 @@
 import { Router } from 'express';
+import Event from '../models/EVENT';
 import Faq from '../models/FAQ';
+import Location from '../models/LOCATION';
 import { OneSignal } from '../services/OneSignal';
 
 const pushRouter = Router();
@@ -128,4 +130,128 @@ pushRouter.post('/faqs', async (req, res) => {
   return;
 });
 
+pushRouter.post('/events', async (req, res) => {
+  // Create a Location entry
+  await Location.create({
+    locationId: 1,
+    locationName: 'Main Venue',
+    locationDescription: 'Primary location for all events',
+  });
+
+  await Event.bulkCreate([
+    // Events from Day 1
+    {
+      eventId: 1,
+      title: 'Análogos 1',
+      description: 'Session on space analogs',
+      eventDay: 1,
+      hourStart: '10:30',
+      hourEnd: '11:00',
+      locationId: 1,
+    },
+    {
+      eventId: 2,
+      title: 'Astronomía 1',
+      description: 'Introduction to astronomy',
+      eventDay: 1,
+      hourStart: '10:45',
+      hourEnd: '12:00',
+      locationId: 1,
+    },
+    {
+      eventId: 3,
+      title: 'Divulgación 1',
+      description: 'Science communication techniques',
+      eventDay: 1,
+      hourStart: '11:00',
+      hourEnd: '13:00',
+      locationId: 1,
+    },
+    {
+      eventId: 4,
+      title: 'Educación 1',
+      description: 'Educational methodologies in science',
+      eventDay: 1,
+      hourStart: '11:15',
+      hourEnd: '14:00',
+      locationId: 1,
+    },
+    {
+      eventId: 5,
+      title: 'Salud/Medicina 1',
+      description: 'Health and medicine in space',
+      eventDay: 1,
+      hourStart: '11:30',
+      hourEnd: '15:00',
+      locationId: 1,
+    },
+    {
+      eventId: 6,
+      title: 'Politica Espacial 1',
+      description: 'Space policy discussion',
+      eventDay: 1,
+      hourStart: '11:45',
+      hourEnd: '16:00',
+      locationId: 1,
+    },
+    {
+      eventId: 7,
+      title: 'Microbiología Espacial 1',
+      description: 'Microbiology in space environments',
+      eventDay: 1,
+      hourStart: '16:00',
+      hourEnd: '17:00',
+      locationId: 1,
+    },
+    {
+      eventId: 8,
+      title: 'Satélites 1',
+      description: 'Satellite technology and applications',
+      eventDay: 1,
+      hourStart: '17:00',
+      hourEnd: '18:00',
+      locationId: 1,
+    },
+    // Events from Day 2
+    {
+      eventId: 9,
+      title: 'Análogos 2',
+      description: 'Advanced session on space analogs',
+      eventDay: 2,
+      hourStart: '10:00',
+      hourEnd: '11:00',
+      locationId: 1,
+    },
+    {
+      eventId: 10,
+      title: 'Astronomía 2',
+      description: 'Advanced astronomy topics',
+      eventDay: 2,
+      hourStart: '11:00',
+      hourEnd: '12:00',
+      locationId: 1,
+    },
+    // Additional events from extracted data, here are a few examples:
+    {
+      eventId: 11,
+      title: 'Keynote 1: Máximo Roa',
+      description: 'Keynote by Máximo Roa from DLR',
+      eventDay: 1,
+      hourStart: '09:00',
+      hourEnd: '10:00',
+      locationId: 1,
+    },
+    {
+      eventId: 12,
+      title: 'Panel 1: Sostenibilidad en Políticas Espaciales',
+      description: 'Discussion on sustainability in space policies',
+      eventDay: 1,
+      hourStart: '10:15',
+      hourEnd: '11:00',
+      locationId: 1,
+    },
+    // Continue listing all other events as per the timings and locations provided in the PDF
+  ]);
+  return res.status(200).json({ message: 'Events created' });
+});
 export default pushRouter;
