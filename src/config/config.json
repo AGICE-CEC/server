@@ -1,0 +1,31 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "root1234",
+    "database": "agice-test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "root1234",
+    "database": "agice-test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }, 
+  "production": {
+    "username": "default",
+    "password": "SAadH6gzwR7u",
+    "database": "verceldb",
+    "host": "ep-wild-snowflake-a4frlq0t-pooler.us-east-1.aws.neon.tech",
+    "port": 5432,
+    "dialect": "postgres",
+    "ssl": true,
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
+  }
+}
