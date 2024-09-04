@@ -1,13 +1,11 @@
-import express, { type Request, type Response } from 'express';
+import { Router, type Request, type Response } from 'express';
 import QRCode from 'qrcode';
 
-const app = express();
-const port = 3000;
-
+const qrGeneratorRouter = Router();
 
 const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 
-app.get('/cec-qr', async (req: Request, res: Response) => {
+qrGeneratorRouter.get('/cec-qr', async (req: Request, res: Response) => {
   const url = req.query.url as string;
 
   if (!url || !urlRegex.test(url)) {
@@ -22,6 +20,4 @@ app.get('/cec-qr', async (req: Request, res: Response) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Servidor corriendo en el puerto ${port}`);
-});
+export default qrGeneratorRouter;
