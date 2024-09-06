@@ -8,7 +8,7 @@ import Event from './EVENT';
 })
 export default class Location extends Model<
   InferAttributes<Location>,
-  InferCreationAttributes<Location, { omit: 'locationId' | 'events' }>
+  InferCreationAttributes<Location, { omit: 'events' }>
 > {
   @Column({
     type: DataType.INTEGER,

@@ -19,7 +19,7 @@ import Speaker from './SPEAKER';
 })
 export default class Event extends Model<
   InferAttributes<Event>,
-  InferCreationAttributes<Event>
+  InferCreationAttributes<Event, { omit: 'location' | 'speakers' }>
 > {
   @Column({
     type: DataType.INTEGER,
