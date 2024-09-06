@@ -1,5 +1,6 @@
 import type { InferAttributes, InferCreationAttributes } from 'sequelize';
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
+import EventSpeaker from './EVENTSPEAKER';
 
 @Table({
   tableName: 'SPEAKER',
@@ -50,4 +51,7 @@ export default class Speaker extends Model<
     allowNull: true,
   })
   contact!: string;
+
+  @HasMany(() => EventSpeaker)
+  eventSpeakers!: EventSpeaker[];
 }

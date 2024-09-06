@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import Event from '../models/EVENT';
+import EventSpeaker from '../models/EVENTSPEAKER';
 import Location from '../models/LOCATION';
 import Speaker from '../models/SPEAKER';
 
@@ -45,6 +46,28 @@ eventRouter.get('/', async (req, res) => {
 
     res.json(eventsByDayArray);
   } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch events' + error });
+  }
+});
+
+eventRouter.get('/with_speakers', async (req, res) => {
+  try {
+    const events = await Event.findAll({
+      include: [
+        {
+          model: EventSpeaker,
+          include: [
+            {
+              model: Speaker,
+            },
+          ],
+        },
+      ],
+      order: [['eventId', 'ASC']],
+    });
+    return res.json(events);
+  } catch (error) {
+    console.log(error);
     res.status(500).json({ error: 'Failed to fetch events' + error });
   }
 });

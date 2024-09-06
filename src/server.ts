@@ -2,12 +2,12 @@ import 'dotenv/config';
 import { createServer } from 'http';
 import { app } from './app';
 
-const port = (process.env.PORT as unknown as number) || 2000;
+const port = (process.env.PORT as unknown as number) || 2001;
 const server = createServer(app);
 
 const startServer = async () => {
   try {
-    server.listen(port);
+    server.listen(port, '0.0.0.0');
     server.on('error', onError);
     server.on('listening', onListening);
   } catch (err) {

@@ -5,6 +5,7 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
@@ -14,6 +15,7 @@ import Speaker from './SPEAKER';
 
 @Table({
   tableName: 'EVENT',
+  timestamps: true,
 })
 export default class Event extends Model<
   InferAttributes<Event>,
@@ -68,4 +70,7 @@ export default class Event extends Model<
 
   @BelongsToMany(() => Speaker, () => EventSpeaker)
   speakers!: Speaker[];
+
+  @HasMany(() => EventSpeaker)
+  eventSpeakers!: EventSpeaker[];
 }

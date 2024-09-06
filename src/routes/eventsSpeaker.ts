@@ -28,4 +28,24 @@ eventSpeakerRouter.get('/:id', async (req, res) => {
   }
 });
 
+eventSpeakerRouter.post('/', async (req, res) => {
+  try {
+    const { eventId, speakerId } = req.body;
+    const eventSpeaker = await EventSpeaker.create({ eventId, speakerId });
+    res.status(201).json(eventSpeaker);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create event speaker' });
+  }
+});
+
+eventSpeakerRouter.delete('/', async (req, res) => {
+  try {
+    const { eventId, speakerId } = req.body;
+    await EventSpeaker.destroy({ where: { eventId, speakerId } });
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete event speaker' });
+  }
+});
+
 export default eventSpeakerRouter;

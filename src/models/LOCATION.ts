@@ -4,6 +4,7 @@ import Event from './EVENT';
 
 @Table({
   tableName: 'LOCATION',
+  timestamps: true,
 })
 export default class Location extends Model<
   InferAttributes<Location>,
