@@ -5,7 +5,7 @@ const speakerRouter = Router();
 
 speakerRouter.get('/', async (req, res) => {
   try {
-    const speakers = await Speaker.findAll();
+    const speakers = await Speaker.findAll({ order: [['speakerId', 'ASC']] });
     res.json(speakers);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch speakers' });

@@ -4,8 +4,9 @@ import eventRouter from './event';
 import eventSpeakerRouter from './eventsSpeaker';
 import faqRouter from './faq';
 import locationRouter from './location';
-import speakerRouter from './speaker';
+import pushRouter from './push';
 import qrGeneratorRouter from './QRgenerator';
+import speakerRouter from './speaker';
 
 const routes = Router();
 
@@ -20,5 +21,6 @@ routes.use('/locations', locationRouter);
 routes.use('/speakers', speakerRouter);
 routes.use('/event-speakers', eventSpeakerRouter);
 routes.use('/qr-generator', qrGeneratorRouter);
+routes.use('/push', pushRouter);
 
 export default routes;
