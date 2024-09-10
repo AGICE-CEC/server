@@ -14,7 +14,9 @@ async function verifyPayment(username: string, sheets: any): Promise<boolean> {
 
   for (const row of rows) {
     // Iterate over each row
-    if (row.get('Correo electrónico') === username) {
+    if (
+      row.get('Correo electrónico')?.toLowerCase() === username.toLowerCase()
+    ) {
       // Check if the username matches
       return row.get('Verificación Qpaypro') === 'OK'; // Return true if verification is OK
     }

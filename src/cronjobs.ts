@@ -1,4 +1,5 @@
 import { CronJob } from 'cron';
+import { DateTime } from 'luxon';
 import { Op } from 'sequelize';
 import Event from './models/EVENT';
 import Location from './models/LOCATION';
@@ -16,14 +17,14 @@ const formatToHour = (date: Date) => {
 const alreadyAlertedEvents = new Set();
 
 export const alertAttendees = async () => {
-  const now = new Date();
+  const now = DateTime.local().setZone('America/Guatemala');
+  const future = now.plus({ minutes: CRONJOB_DELTA_MINS });
 
-  const future = new Date(now.getTime() + CRONJOB_DELTA_MINS * 60 * 1000);
   const events = await Event.findAll({
     where: {
-      eventDay: now.getDate(),
+      eventDay: now.toFormat('dd'),
       hourStart: {
-        [Op.between]: [formatToHour(now), formatToHour(future)],
+        [Op.between]: [now.toFormat('HH:mm'), future.toFormat('HH:mm')],
       },
       eventId: {
         [Op.notIn]: Array.from(alreadyAlertedEvents) as number[],

@@ -30,7 +30,9 @@ qrGeneratorRouter.get('/:email', async (req: Request, res: Response) => {
 const getUserDetails = async (email: string) => {
   const sheet = await Google.getSheet();
   const rows = await sheet.getRows();
-  const user = rows.find(row => row.get('Correo electrónico') === email);
+  const user = rows.find(
+    row => row.get('Correo electrónico')?.toLowerCase() === email.toLowerCase()
+  );
 
   return user;
 };
