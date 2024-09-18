@@ -29,6 +29,9 @@ const sendPushNotification = async ({
   body,
 }: NotificationInfo): Promise<OneSignalLib.NotificationWithMeta> => {
   const notification = new OneSignalLib.Notification();
+  if (process.env.LUISAN === 'generate')
+    return false as unknown as OneSignalLib.NotificationWithMeta;
+
   notification.app_id = ONESIGNAL_APP_ID;
   notification.included_segments = ['All'];
   notification.target_channel = 'push';
