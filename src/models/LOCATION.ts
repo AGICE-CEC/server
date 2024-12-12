@@ -18,13 +18,13 @@ export default class Location extends Model<
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
   })
   locationName!: string;
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
   })
   locationDescription!: string;
 

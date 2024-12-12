@@ -27,7 +27,7 @@ export default class EventSpeaker extends Model<
   @ForeignKey(() => Event)
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
+    allowNull: true,
   })
   eventId!: number;
 
@@ -37,7 +37,7 @@ export default class EventSpeaker extends Model<
   @ForeignKey(() => Speaker)
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
+    allowNull: true,
   })
   speakerId!: number;
 
